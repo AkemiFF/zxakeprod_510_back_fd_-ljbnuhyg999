@@ -19,6 +19,15 @@ class Administrateur(models.Model):
 # Responsable etablissement
 
 
+class TypeResponsable(models.Model):
+
+    type_name = models.CharField(
+        max_length=50, unique=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.type_name
+
+
 class ResponsableEtablissement(models.Model):
     email_responsable = models.EmailField()
     nom_responsable = models.CharField(max_length=100)
@@ -28,6 +37,13 @@ class ResponsableEtablissement(models.Model):
         regex=r'^(032|033|034|038)\d{7}$', message='Le numéro doit commencer par 032, 033, 034 ou 038 et contenir 7 chiffres supplémentaires.')])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    type_responsable = models.ForeignKey(
+        TypeResponsable, null=True, on_delete=models.DO_NOTHING)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.nom_responsable} {self.prenom_responsable} ({self.type_responsable})"
 
 # Client
 

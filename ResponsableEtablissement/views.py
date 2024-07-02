@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from .models import Responsable_etablissement
+from Accounts.models import ResponsableEtablissement
 from validate_email import validate_email  # type: ignore
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -13,7 +13,7 @@ from .serializers import ResponsableEtablissementSerializer
 # Tous les responsable
 @api_view(['GET'])
 def get_responsables_etablissement(request):
-    responsables = Responsable_etablissement.objects.all()
+    responsables = ResponsableEtablissement.objects.all()
     serializer = ResponsableEtablissementSerializer(responsables, many=True)
     return Response(serializer.data)
 
@@ -23,10 +23,10 @@ def get_responsables_etablissement(request):
 @api_view(['GET'])
 def get_responsable_etablissement_detail(request, pk):
     try:
-        responsable = Responsable_etablissement.objects.get(pk=pk)
+        responsable = ResponsableEtablissement.objects.get(pk=pk)
         serializer = ResponsableEtablissementSerializer(responsable)
         return Response(serializer.data)
-    except Responsable_etablissement.DoesNotExist:
+    except ResponsableEtablissement.DoesNotExist:
         return Response({"message": "Le responsable d'établissement n'existe pas."}, status=status.HTTP_404_NOT_FOUND)
 
 # Creer des responsable etablissement
@@ -47,8 +47,8 @@ def signup_responsable(request):
 @api_view(['PUT'])
 def update_responsable_etablissement(request, pk):
     try:
-        responsable = Responsable_etablissement.objects.get(pk=pk)
-    except Responsable_etablissement.DoesNotExist:
+        responsable = ResponsableEtablissement.objects.get(pk=pk)
+    except ResponsableEtablissement.DoesNotExist:
         return Response({"message": "Le responsable d'établissement n'existe pas."}, status=status.HTTP_404_NOT_FOUND)
 
     serializer = ResponsableEtablissementSerializer(
@@ -64,8 +64,8 @@ def update_responsable_etablissement(request, pk):
 @api_view(['DELETE'])
 def delete_responsable_etablissement(request, pk):
     try:
-        responsable = Responsable_etablissement.objects.get(pk=pk)
-    except Responsable_etablissement.DoesNotExist:
+        responsable = ResponsableEtablissement.objects.get(pk=pk)
+    except ResponsableEtablissement.DoesNotExist:
         return Response({"message": "Le responsable d'établissement n'existe pas."}, status=status.HTTP_404_NOT_FOUND)
 
     responsable.delete()

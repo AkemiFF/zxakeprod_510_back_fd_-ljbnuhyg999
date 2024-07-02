@@ -5,3 +5,4 @@ from Accounts.models import *
 admin.site.register(Administrateur)
 admin.site.register(Client)
 admin.site.register(ResponsableEtablissement)
+admin.site.register(TypeResponsable)
