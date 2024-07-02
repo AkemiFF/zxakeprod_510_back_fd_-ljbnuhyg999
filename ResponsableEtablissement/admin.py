@@ -1,3 +1,4 @@
 from django.contrib import admin
+from ResponsableEtablissement.models import *
 
-# Register your models here.
+admin.site.register(Responsable_etablissement)
