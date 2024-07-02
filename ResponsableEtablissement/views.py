@@ -1,8 +1,9 @@
+from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from .models import Responsable_etablissement
-from validate_email import validate_email
+from validate_email import validate_email  # type: ignore
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import ResponsableEtablissementLoginSerializer
@@ -17,6 +18,8 @@ def get_responsables_etablissement(request):
     return Response(serializer.data)
 
 # Responsable selectionner par id
+
+
 @api_view(['GET'])
 def get_responsable_etablissement_detail(request, pk):
     try:
@@ -27,6 +30,8 @@ def get_responsable_etablissement_detail(request, pk):
         return Response({"message": "Le responsable d'établissement n'existe pas."}, status=status.HTTP_404_NOT_FOUND)
 
 # Creer des responsable etablissement
+
+
 @api_view(['POST'])
 def signup_responsable(request):
     if request.method == 'POST':
@@ -35,8 +40,10 @@ def signup_responsable(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
 # update responsable
+
+
 @api_view(['PUT'])
 def update_responsable_etablissement(request, pk):
     try:
@@ -44,13 +51,16 @@ def update_responsable_etablissement(request, pk):
     except Responsable_etablissement.DoesNotExist:
         return Response({"message": "Le responsable d'établissement n'existe pas."}, status=status.HTTP_404_NOT_FOUND)
 
-    serializer = ResponsableEtablissementSerializer(responsable, data=request.data)
+    serializer = ResponsableEtablissementSerializer(
+        responsable, data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Delete responsable
+
+
 @api_view(['DELETE'])
 def delete_responsable_etablissement(request, pk):
     try:
@@ -60,7 +70,6 @@ def delete_responsable_etablissement(request, pk):
 
     responsable.delete()
     return Response({"message": "Le responsable d'établissement a été supprimé avec succès."}, status=status.HTTP_204_NO_CONTENT)
-
 
 
 # Login
@@ -80,5 +89,6 @@ def responsable_etablissement_login(request):
 
 def check_email(request):
     email = request.GET.get('email')
-    is_valid = validate_email(email, verify=True)  # Vérifie l'existence du domaine
+    # Vérifie l'existence du domaine
+    is_valid = validate_email(email, verify=True)
     return JsonResponse({'is_valid': is_valid})

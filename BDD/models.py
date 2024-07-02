@@ -12,7 +12,7 @@ class Hotel(models.Model):
     latitude_hotel = models.FloatField()
     longitude_hotel = models.FloatField()
     responsable_hotel = models.ForeignKey(
-        Responsable_etablissement, on_delete=models.CASCADE, related_name='hotels')
+        ResponsableEtablissement, on_delete=models.CASCADE, related_name='hotels')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -76,7 +76,7 @@ class Reservation(models.Model):
 
 class Message(models.Model):
     expediteur = models.ForeignKey(
-        Responsable_etablissement, on_delete=models.CASCADE, related_name='messages_envoyes')
+        ResponsableEtablissement, on_delete=models.CASCADE, related_name='messages_envoyes')
     destinataire = models.ForeignKey(
         Client, on_delete=models.CASCADE, related_name='messages_recus')
     sujet = models.CharField(max_length=255)
@@ -85,7 +85,7 @@ class Message(models.Model):
 
 
 # Artisanat
-class Artisanat(models.Model):
+class ProduitArtisanals(models.Model):
     nom_artisanat = models.CharField(max_length=100)
     description_artisanat = models.TextField()
     prix_artisanat = models.DecimalField(max_digits=8, decimal_places=2)
@@ -93,7 +93,7 @@ class Artisanat(models.Model):
     image_artisanat = models.ImageField(
         upload_to='artisanat_images', blank=True)
     responsable_artisanat = models.ForeignKey(
-        Responsable_etablissement, on_delete=models.CASCADE, related_name='produits_artisanat')
+        ResponsableEtablissement, on_delete=models.CASCADE, related_name='produits_artisanat')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -102,7 +102,7 @@ class Artisanat(models.Model):
 
 class CommandeArtisanat(models.Model):
     responsable_commande = models.ForeignKey(
-        Responsable_etablissement, on_delete=models.CASCADE, related_name='commandes')
+        ResponsableEtablissement, on_delete=models.CASCADE, related_name='commandes')
     client_commande = models.ForeignKey(
         Client, on_delete=models.CASCADE, related_name='commandes')
     quantite_commande = models.IntegerField()

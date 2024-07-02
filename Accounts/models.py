@@ -19,7 +19,7 @@ class Administrateur(models.Model):
 # Responsable etablissement
 
 
-class Responsable_etablissement(models.Model):
+class ResponsableEtablissement(models.Model):
     email_responsable = models.EmailField()
     nom_responsable = models.CharField(max_length=100)
     prenom_responsable = models.CharField(max_length=100)
