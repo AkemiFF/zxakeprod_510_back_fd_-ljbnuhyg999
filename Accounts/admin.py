@@ -1,3 +1,7 @@
 from django.contrib import admin
+from Accounts.models import *
 
-# Register your models here.
+
+admin.site.register(Administrateur)
+admin.site.register(Responsable_etablissement)
+admin.site.register(Client)

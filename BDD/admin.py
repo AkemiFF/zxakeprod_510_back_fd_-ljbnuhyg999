@@ -1,3 +1,12 @@
 from django.contrib import admin
+from BDD.models import *
 
-# Register your models here.
+
+admin.site.register(Hotel)
+admin.site.register(HotelImage)
+admin.site.register(Accessoire)
+admin.site.register(Chambre)
+admin.site.register(Reservation)
+admin.site.register(Message)
+admin.site.register(Artisanat)
+admin.site.register(CommandeArtisanat)
