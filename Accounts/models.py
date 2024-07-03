@@ -41,6 +41,11 @@ class ResponsableEtablissement(models.Model):
 
 class TypeCarteBancaire(models.Model):
     name = models.CharField(max_length=50, unique=True)
+    regex_pattern = models.CharField(
+        max_length=255,
+        help_text="Expression régulière pour la validation du numéro de carte bancaire",
+        default=r'^$'
+    )
 
     def __str__(self):
         return self.name
@@ -64,7 +69,6 @@ class Client(AbstractUser):
         TypeCarteBancaire, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    # REQUIRED_FIELDS = ['numero_client', 'first_name', 'last_name']
 
     def __str__(self):
         return self.first_name
@@ -81,6 +85,7 @@ Client._meta.get_field('password').validators = [
             'Le mot de passe doit contenir au moins 8 caractères, une lettre et un chiffre.')
     )
 ]
+
 ResponsableEtablissement._meta.get_field('password_responsable').validators = [
     RegexValidator(
         regex=r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
