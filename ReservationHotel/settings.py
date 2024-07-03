@@ -130,3 +130,5 @@ REST_FRAMEWORK = {
         # Ajoutez d'autres classes d'authentification si nécessaire
     ),
 }
+
+AUTH_USER_MODEL = 'Accounts.Client'
