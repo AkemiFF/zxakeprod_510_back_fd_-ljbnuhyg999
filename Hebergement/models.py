@@ -18,7 +18,7 @@ class TypeHebergement(models.Model):
 class HebergementImage(models.Model):
     hebergement = models.ForeignKey(
         'Hebergement', on_delete=models.CASCADE, related_name='images')
-    images = models.ImageField(upload_to='image/hebergement_images')
+    images = models.ImageField(upload_to='images/hebergement_images')
     couverture = models.BooleanField(default=False)
     legende_hebergement = models.CharField(max_length=200, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -98,24 +98,34 @@ class ChambrePersonaliser(models.Model):
 
 class HebergementChambre(models.Model):
     hebergement = models.ForeignKey(Hebergement, on_delete=models.CASCADE)
-    accessoire = models.ForeignKey(AccessoireChambre, on_delete=models.CASCADE)
-
     chambre = models.ForeignKey(Chambre, on_delete=models.CASCADE, null=True)
-
     chambre_personaliser = models.ForeignKey(
-        ChambrePersonaliser, on_delete=models.CASCADE, null=True)
-
+        ChambrePersonaliser, on_delete=models.CASCADE, null=True, blank=True)
     prix_nuit_chambre = models.DecimalField(max_digits=8, decimal_places=2)
     disponible_chambre = models.BooleanField(default=True)
+    accessoires = models.ManyToManyField(
+        'AccessoireChambre', through='HebergementChambreAccessoire')
 
     def __str__(self):
         return f'{self.hebergement} - {self.chambre}'
 
 
+class HebergementChambreAccessoire(models.Model):
+    hebergement_chambre = models.ForeignKey(
+        HebergementChambre, on_delete=models.CASCADE)
+    accessoire_chambre = models.ForeignKey(
+        AccessoireChambre, on_delete=models.CASCADE)
+
+    note = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.hebergement_chambre} - {self.accessoire_chambre}'
+
+
 class ImageChambre(models.Model):
     hebergement_chambre = models.ForeignKey(
         'HebergementChambre', on_delete=models.CASCADE, related_name='images_chambre')
-    images = models.ImageField(upload_to='image/images_chambre')
+    images = models.ImageField(upload_to='images/images_chambre')
     couverture = models.BooleanField(default=False)
     legende_chambre = models.CharField(max_length=200, blank=True)
 
