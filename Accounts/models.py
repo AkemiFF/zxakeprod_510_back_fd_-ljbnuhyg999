@@ -82,7 +82,8 @@ class Client(AbstractUser):
 
 Client._meta.get_field('password').validators = [
     RegexValidator(
-        regex=r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
+        regex=r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$',
+
         message=_(
             'Le mot de passe doit contenir au moins 8 caractères, une lettre et un chiffre.')
     )
@@ -90,7 +91,7 @@ Client._meta.get_field('password').validators = [
 
 ResponsableEtablissement._meta.get_field('password_responsable').validators = [
     RegexValidator(
-        regex=r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
+        regex=r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$',
         message=_(
             'Le mot de passe doit contenir au moins 8 caractères, une lettre et un chiffre.')
     )
