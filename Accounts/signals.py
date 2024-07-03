@@ -7,7 +7,7 @@ from Accounts.models import TypeCarteBancaire, TypeResponsable
 @receiver(post_migrate)
 def create_initial_types(sender, **kwargs):
     if sender.name == 'Accounts':
-        TypeResponsable.objects.get_or_create(type_name="Hotel")
+        TypeResponsable.objects.get_or_create(type_name="Hebergement")
         TypeResponsable.objects.get_or_create(type_name="Artisanal")
         TypeResponsable.objects.get_or_create(type_name="Tour Operateur")
 
