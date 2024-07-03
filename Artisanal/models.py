@@ -69,20 +69,3 @@ class Commande(models.Model):
 
     def __str__(self):
         return f"Commande {self.id} - {self.client.email} - {self.date_commande}"
-
-
-class Livraison(models.Model):
-    commande = models.OneToOneField(
-        Commande, on_delete=models.CASCADE, related_name='livraison')
-    adresse = models.CharField(max_length=255)
-    date_livraison = models.DateTimeField()
-    livreur = models.CharField(max_length=100)
-    status = models.CharField(max_length=20, choices=[
-        ('En attente', 'En attente'),
-        ('En cours', 'En cours'),
-        ('Livré', 'Livré'),
-        ('Annulé', 'Annulé')
-    ], default='En attente')
-
-    def __str__(self):
-        return f"Livraison {self.id} - Commande {self.commande.id}"
