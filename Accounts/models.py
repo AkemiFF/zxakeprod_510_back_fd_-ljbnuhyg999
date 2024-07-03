@@ -21,7 +21,9 @@ class ResponsableEtablissement(models.Model):
     email_responsable = models.EmailField()
     nom_responsable = models.CharField(max_length=100)
     prenom_responsable = models.CharField(max_length=100)
+
     password_responsable = models.CharField(max_length=100)
+
     numero_responsable = models.CharField(max_length=10, validators=[RegexValidator(
         regex=r'^(032|033|034|038)\d{7}$', message='Le numéro doit commencer par 032, 033, 034 ou 038 et contenir 7 chiffres supplémentaires.')])
     created_at = models.DateTimeField(auto_now_add=True)
@@ -80,7 +82,8 @@ class Client(AbstractUser):
 
 Client._meta.get_field('password').validators = [
     RegexValidator(
-        regex=r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
+        regex=r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$',
+
         message=_(
             'Le mot de passe doit contenir au moins 8 caractères, une lettre et un chiffre.')
     )
@@ -88,7 +91,7 @@ Client._meta.get_field('password').validators = [
 
 ResponsableEtablissement._meta.get_field('password_responsable').validators = [
     RegexValidator(
-        regex=r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
+        regex=r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$',
         message=_(
             'Le mot de passe doit contenir au moins 8 caractères, une lettre et un chiffre.')
     )
