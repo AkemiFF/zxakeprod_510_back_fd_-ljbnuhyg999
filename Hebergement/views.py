@@ -1,14 +1,11 @@
 # views.py
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Hebergement
-from .serializers import HebergementSerializer
+from Hebergement.serializers import ImageChambreSerializer
+from rest_framework import generics
+from Hebergement.models import ImageChambre
 
-@api_view(['GET'])
-def all_hebergements_view(request):
-    try:
-        hebergements = Hebergement.objects.prefetch_related('images').all()
-        serializer = HebergementSerializer(hebergements, many=True)
-        return Response(serializer.data)
-    except Hebergement.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+
+class ImageChambreListAPIView(generics.ListAPIView):
+    queryset = ImageChambre.objects.all()
+    serializer_class = ImageChambreSerializer

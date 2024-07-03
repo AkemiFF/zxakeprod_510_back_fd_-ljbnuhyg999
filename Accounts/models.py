@@ -26,8 +26,7 @@ class ResponsableEtablissement(models.Model):
 
     numero_responsable = models.CharField(max_length=10, validators=[RegexValidator(
         regex=r'^(032|033|034|038)\d{7}$', message='Le numéro doit commencer par 032, 033, 034 ou 038 et contenir 7 chiffres supplémentaires.')])
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+
     type_responsable = models.ForeignKey(
         TypeResponsable, null=True, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)

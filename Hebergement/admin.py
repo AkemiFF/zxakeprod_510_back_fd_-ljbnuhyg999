@@ -14,6 +14,7 @@ admin.site.register(Chambre)
 admin.site.register(ChambrePersonaliser)
 admin.site.register(AccessoireChambre)
 admin.site.register(ImageChambre)
+admin.site.register(Localisation)
 
 
 admin.site.register(TypeHebergement)
