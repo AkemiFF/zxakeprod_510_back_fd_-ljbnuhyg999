@@ -71,7 +71,7 @@ class Client(AbstractUser):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.first_name
+        return self.email
 
     class Meta:
         verbose_name = _('client')
