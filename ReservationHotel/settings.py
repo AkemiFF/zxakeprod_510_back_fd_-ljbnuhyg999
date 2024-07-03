@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ResponsableEtablissement',
     'Accounts',
+    'BDD',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,5 @@ REST_FRAMEWORK = {
         # Ajoutez d'autres classes d'authentification si nécessaire
     ),
 }
+
+AUTH_USER_MODEL = 'Accounts.Client'

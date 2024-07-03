@@ -1,8 +1,8 @@
 from django.db import models
 from Accounts.models import *
+from django.core.exceptions import ValidationError
 
 
-# Hotel
 class Hotel(models.Model):
     nom_hotel = models.CharField(max_length=100)
     description_hotel = models.TextField()
@@ -12,12 +12,43 @@ class Hotel(models.Model):
     latitude_hotel = models.FloatField()
     longitude_hotel = models.FloatField()
     responsable_hotel = models.ForeignKey(
-        Responsable_etablissement, on_delete=models.CASCADE, related_name='hotels')
+        ResponsableEtablissement, on_delete=models.CASCADE, related_name='hotels')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+
+    def clean(self):
+        super().clean()
+        if self.responsable_hotel.type_responsable.type_name != "Hotel":
+            raise ValidationError("Le responsable doit être de type 'Hotel'.")
+
+    def __str__(self):
+        return self.nom_hotel
+
+
+# Artisanat
+
+class ProduitArtisanals(models.Model):
+    nom_artisanat = models.CharField(max_length=100)
+    description_artisanat = models.TextField()
+    prix_artisanat = models.DecimalField(max_digits=8, decimal_places=2)
+    disponible_artisanat = models.BooleanField(default=True)
+    image_artisanat = models.ImageField(
+        upload_to='artisanat_images', blank=True)
+    responsable_artisanat = models.ForeignKey(
+        ResponsableEtablissement, on_delete=models.CASCADE, related_name='produits_artisanat')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-# Image hotel
+    def clean(self):
+        super().clean()
+        if self.responsable_hotel.type_responsable.type_name != "Hotel":
+            raise ValidationError("Le responsable doit être de type 'Hotel'.")
 
+    def __str__(self):
+        return self.nom_artisanat
+
+
+# Image hotel
 
 class HotelImage(models.Model):
     hotel = models.ForeignKey(
@@ -76,7 +107,7 @@ class Reservation(models.Model):
 
 class Message(models.Model):
     expediteur = models.ForeignKey(
-        Responsable_etablissement, on_delete=models.CASCADE, related_name='messages_envoyes')
+        ResponsableEtablissement, on_delete=models.CASCADE, related_name='messages_envoyes')
     destinataire = models.ForeignKey(
         Client, on_delete=models.CASCADE, related_name='messages_recus')
     sujet = models.CharField(max_length=255)
@@ -84,25 +115,12 @@ class Message(models.Model):
     date_envoi = models.DateTimeField(auto_now_add=True)
 
 
-# Artisanat
-class Artisanat(models.Model):
-    nom_artisanat = models.CharField(max_length=100)
-    description_artisanat = models.TextField()
-    prix_artisanat = models.DecimalField(max_digits=8, decimal_places=2)
-    disponible_artisanat = models.BooleanField(default=True)
-    image_artisanat = models.ImageField(
-        upload_to='artisanat_images', blank=True)
-    responsable_artisanat = models.ForeignKey(
-        Responsable_etablissement, on_delete=models.CASCADE, related_name='produits_artisanat')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
 # Commande artisanat
 
 
 class CommandeArtisanat(models.Model):
     responsable_commande = models.ForeignKey(
-        Responsable_etablissement, on_delete=models.CASCADE, related_name='commandes')
+        ResponsableEtablissement, on_delete=models.CASCADE, related_name='commandes')
     client_commande = models.ForeignKey(
         Client, on_delete=models.CASCADE, related_name='commandes')
     quantite_commande = models.IntegerField()
