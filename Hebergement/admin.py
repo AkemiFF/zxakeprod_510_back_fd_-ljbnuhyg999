@@ -8,6 +8,7 @@ admin.site.register(HebergementImage)
 admin.site.register(AccessoireHebergement)
 admin.site.register(HebergementAccessoire)
 
+admin.site.register(HebergementChambreAccessoire)
 admin.site.register(HebergementChambre)
 admin.site.register(Chambre)
 admin.site.register(ChambrePersonaliser)
