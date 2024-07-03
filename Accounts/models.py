@@ -4,23 +4,6 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 
 
-class Administrateur(models.Model):
-    nom_admin = models.CharField(max_length=100)
-    prenom_admin = models.CharField(max_length=100)
-    email_admin = models.EmailField()
-    mdp_admin = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    # def set_password(self, raw_password):
-    #     """
-    #     Définit le mot de passe de l'administrateur en le hachant.
-    #     """
-    #     self.mdp_admin = make_password(raw_password)
-
-# Responsable etablissement
-
-
 class TypeResponsable(models.Model):
     type_name = models.CharField(
         max_length=50, unique=True, null=True, blank=True)

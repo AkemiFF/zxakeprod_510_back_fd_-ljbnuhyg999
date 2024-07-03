@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'ResponsableEtablissement',
     'Accounts',
     'BDD',
+    'Artisanal',
 ]
 
 MIDDLEWARE = [

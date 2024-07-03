@@ -25,29 +25,6 @@ class Hotel(models.Model):
         return self.nom_hotel
 
 
-# Artisanat
-
-class ProduitArtisanals(models.Model):
-    nom_artisanat = models.CharField(max_length=100)
-    description_artisanat = models.TextField()
-    prix_artisanat = models.DecimalField(max_digits=8, decimal_places=2)
-    disponible_artisanat = models.BooleanField(default=True)
-    image_artisanat = models.ImageField(
-        upload_to='artisanat_images', blank=True)
-    responsable_artisanat = models.ForeignKey(
-        ResponsableEtablissement, on_delete=models.CASCADE, related_name='produits_artisanat')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def clean(self):
-        super().clean()
-        if self.responsable_hotel.type_responsable.type_name != "Hotel":
-            raise ValidationError("Le responsable doit être de type 'Hotel'.")
-
-    def __str__(self):
-        return self.nom_artisanat
-
-
 # Image hotel
 
 class HotelImage(models.Model):
@@ -113,18 +90,3 @@ class Message(models.Model):
     sujet = models.CharField(max_length=255)
     contenu = models.TextField()
     date_envoi = models.DateTimeField(auto_now_add=True)
-
-
-# Commande artisanat
-
-
-class CommandeArtisanat(models.Model):
-    responsable_commande = models.ForeignKey(
-        ResponsableEtablissement, on_delete=models.CASCADE, related_name='commandes')
-    client_commande = models.ForeignKey(
-        Client, on_delete=models.CASCADE, related_name='commandes')
-    quantite_commande = models.IntegerField()
-    prix_total_commande = models.DecimalField(max_digits=10, decimal_places=2)
-    est_validee_commande = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
