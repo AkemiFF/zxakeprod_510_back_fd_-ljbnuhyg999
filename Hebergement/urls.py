@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import *
+from Hebergement import views
 
 urlpatterns = [
-    path('admin_hebergement', all_hebergements_view, name="liste_hebergement"),
-    # path('create_hebergement', create_hebergement, name="creer_hebergement"),
+    path('api/images-chambre/', views.ImageChambreListAPIView.as_view(),
+         name='images-chambre-list'),
 ]
