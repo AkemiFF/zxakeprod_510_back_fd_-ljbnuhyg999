@@ -18,7 +18,7 @@ class TypeHebergement(models.Model):
 class HebergementImage(models.Model):
     hebergement = models.ForeignKey(
         'Hebergement', on_delete=models.CASCADE, related_name='images')
-    images = models.ImageField(upload_to='image/hebergement_images')
+    images = models.ImageField(upload_to='images/hebergement_images')
     couverture = models.BooleanField(default=False)
     legende_hebergement = models.CharField(max_length=200, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -125,7 +125,7 @@ class HebergementChambreAccessoire(models.Model):
 class ImageChambre(models.Model):
     hebergement_chambre = models.ForeignKey(
         'HebergementChambre', on_delete=models.CASCADE, related_name='images_chambre')
-    images = models.ImageField(upload_to='image/images_chambre')
+    images = models.ImageField(upload_to='images/images_chambre')
     couverture = models.BooleanField(default=False)
     legende_chambre = models.CharField(max_length=200, blank=True)
 
