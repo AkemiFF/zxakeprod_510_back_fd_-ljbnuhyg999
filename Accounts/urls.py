@@ -2,8 +2,10 @@ from django.urls import path
 from .import views
 
 urlpatterns = [
+
     path('type-responsable/<int:pk>/', views.type_responsable_detail,
          name='type_responsable_detail'),
+
     path('type-responsable/create/', views.type_responsable_create,
          name='type_responsable_create'),
     path('type-responsable/update/<int:pk>/',
