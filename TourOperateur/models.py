@@ -1,6 +1,8 @@
 from django.db import models
 from Accounts.models import ResponsableEtablissement
+from Accounts.models import Client
 from django.core.validators import RegexValidator
+from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 class TourOperateur(models.Model):
@@ -40,3 +42,17 @@ class ImageVoyage(models.Model):
 
     def __str__(self):
         return f"Image for {self.voyage.nom_voyage}"
+
+class Reservation_voyage(models.Model):
+    voyage = models.ForeignKey(Voyage, on_delete=models.CASCADE, related_name='reservations')
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    date_reservation_voyage = models.DateTimeField(auto_now_add=True)
+    
+    # Choices for reservation status
+    STATUS_CHOICES = (
+        ('confirmed', _('Confirmée')),
+        ('pending', _('En attente')),
+        ('cancelled', _('Annulée')),
+        # Add more statuses as needed
+    )
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
