@@ -6,7 +6,7 @@ from Accounts.models import *
 class TypeResponsableSerializer(serializers.ModelSerializer):
     class Meta:
         model = TypeResponsable
-        fields = ('type_name',)  # Les champs doivent être un tuple, même s'il n'y a qu'un seul champ.
+        fields = ('type_name',)
 
 # Pour ResponsableEtablissement
 class ResponsableEtablissementSerializer(serializers.ModelSerializer):
@@ -32,5 +32,8 @@ class ClientSerializer(serializers.ModelSerializer):
         model = Client
         fields = (
             'username', 'email', 'numero_client', 'numero_bancaire_client',
-            'type_carte_bancaire', 'created_at', 'updated_at'
+            'type_carte_bancaire', 'created_at', 'updated_at','first_name','last_name','email','is_staff','is_active' 
         )
+    extra_kwargs = {
+        'password': {'write_only': True},
+    }
