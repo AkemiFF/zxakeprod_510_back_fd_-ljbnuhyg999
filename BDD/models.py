@@ -1,9 +1,5 @@
 from django.db import models
 from Accounts.models import *
-
-
-# Hotel
-from django.db import models
 from django.core.exceptions import ValidationError
 
 
