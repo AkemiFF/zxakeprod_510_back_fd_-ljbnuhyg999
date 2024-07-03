@@ -29,5 +29,4 @@ class TypeCarteBancaireSerializer(serializers.ModelSerializer):
 class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         models = Client
-        fields = ('username', 'email', 'numero_client', 'numero_bancaire_client', 'created_at', 'updated_at',)
-          
+        fields = ('username', 'email', 'numero_client', 'numero_bancaire_client','type_carte_bancaire', 'created_at', 'updated_at',)  
