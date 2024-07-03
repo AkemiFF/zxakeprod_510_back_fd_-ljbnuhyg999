@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'Accounts',
     'BDD',
     'Artisanal',
+    'Administrateurs',
 ]
 
 MIDDLEWARE = [

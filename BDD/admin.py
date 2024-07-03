@@ -1,9 +1,10 @@
 from django.contrib import admin
+from Administrateurs.models import *
 from BDD.models import *
 
 
-admin.site.register(Hotel)
-admin.site.register(HotelImage)
+admin.site.register(Hebergement)
+admin.site.register(HebergementImage)
 admin.site.register(Accessoire)
 admin.site.register(Chambre)
 admin.site.register(Reservation)
