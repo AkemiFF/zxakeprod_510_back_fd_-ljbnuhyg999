@@ -29,8 +29,6 @@ class ResponsableEtablissement(models.Model):
     def __str__(self):
         return f"{self.nom_responsable} {self.prenom_responsable} ({self.type_responsable})"
 
-# Client
-
 
 class TypeCarteBancaire(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -41,7 +39,13 @@ class TypeCarteBancaire(models.Model):
 
 
 class Client(AbstractUser):
-    username = None
+    username = models.CharField(
+        _("username"),
+        max_length=150,
+        unique=True,
+        null=True, blank=True
+
+    )
     email = models.EmailField(_('email address'), unique=True)
     numero_client = models.CharField(max_length=10)
     numero_bancaire_client = models.CharField(max_length=19, null=True, validators=[RegexValidator(
@@ -52,7 +56,6 @@ class Client(AbstractUser):
         TypeCarteBancaire, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['numero_client', 'first_name', 'last_name']
 
     def __str__(self):
