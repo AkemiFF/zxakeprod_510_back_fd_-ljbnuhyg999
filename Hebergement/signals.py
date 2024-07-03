@@ -6,8 +6,15 @@ from Hebergement.models import *
 
 @receiver(post_migrate)
 def create_initial_types(sender, **kwargs):
-    TypeHebergement.objects.get_or_create(type_name="Hotel")
-    TypeHebergement.objects.get_or_create(type_name="Bungallow")
+    hebergement_types = [
+        "Hotel", "Bungallow", "Appartement", "Maison d'hôtes", "Chalet",
+        "Gîte", "Camping", "Auberge de jeunesse", "Villa", "Motel",
+        "Pension", "Resort", "Chambre d'hôtes", "Cottage", "Lodge",
+        "Hostel", "Riad", "Ryokan", "Cabane", "Bateau", "Tente"
+    ]
+
+    for type_name in hebergement_types:
+        TypeHebergement.objects.get_or_create(type_name=type_name)
 
     accessoires_chambre = [
         "Wifi", "Bureau", "Coffre-fort", "Table à manger",
