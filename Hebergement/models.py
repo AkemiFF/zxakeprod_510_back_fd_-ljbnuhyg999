@@ -38,14 +38,23 @@ class AccessoireHebergement(models.Model):
         return self.nom_accessoire
 
 
+class Localisation(models.Model):
+    adresse = models.CharField(max_length=200, null=True, blank=True)
+    ville = models.CharField(max_length=100, null=True, blank=True)
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
+
+    def __str__(self):
+        return self.adresse
+
+
 class Hebergement(models.Model):
     nom_hebergement = models.CharField(max_length=100)
     description_hebergement = models.TextField()
-    adresse_hebergement = models.CharField(max_length=200)
-    ville_hebergement = models.CharField(max_length=100)
     nombre_etoile_hebergement = models.IntegerField()
-    latitude_hebergement = models.FloatField()
-    longitude_hebergement = models.FloatField()
+    localisation = models.OneToOneField(
+        Localisation, on_delete=models.CASCADE, related_name='hebergement', null=True, blank=True)
+
     responsable_hebergement = models.ForeignKey(
         ResponsableEtablissement, on_delete=models.CASCADE, related_name='hebergements')
     type_hebergement = models.ForeignKey(
@@ -98,7 +107,8 @@ class ChambrePersonaliser(models.Model):
 
 class HebergementChambre(models.Model):
     hebergement = models.ForeignKey(Hebergement, on_delete=models.CASCADE)
-    chambre = models.ForeignKey(Chambre, on_delete=models.CASCADE, null=True)
+    chambre = models.ForeignKey(
+        Chambre, on_delete=models.CASCADE, null=True, blank=True)
     chambre_personaliser = models.ForeignKey(
         ChambrePersonaliser, on_delete=models.CASCADE, null=True, blank=True)
     prix_nuit_chambre = models.DecimalField(max_digits=8, decimal_places=2)
@@ -107,7 +117,7 @@ class HebergementChambre(models.Model):
         'AccessoireChambre', through='HebergementChambreAccessoire')
 
     def __str__(self):
-        return f'{self.hebergement} - {self.chambre}'
+        return f'{self.hebergement} - {self.chambre} - {self.chambre_personaliser}'
 
 
 class HebergementChambreAccessoire(models.Model):
@@ -148,20 +158,8 @@ class Reservation(models.Model):
     date_debut_reserve = models.DateField()
     date_fin_reserve = models.DateField()
     nombre_personnes_reserve = models.IntegerField(
-        default=1)  # Nombre de personnes pour la réservation
+        default=1)
     prix_total_reserve = models.DecimalField(max_digits=10, decimal_places=2)
     est_validee_reserve = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-# Message
-
-
-class Message(models.Model):
-    expediteur = models.ForeignKey(
-        ResponsableEtablissement, on_delete=models.CASCADE, related_name='messages_envoyes')
-    destinataire = models.ForeignKey(
-        Client, on_delete=models.CASCADE, related_name='messages_recus')
-    sujet = models.CharField(max_length=255)
-    contenu = models.TextField()
-    date_envoi = models.DateTimeField(auto_now_add=True)

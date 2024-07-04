@@ -1,18 +1,21 @@
-# serializers.py
+# Hebergement/serializers.py
 from rest_framework import serializers
-from .models import Hebergement, HebergementImage
+from Hebergement.models import *
 
-class HebergementImageSerializer(serializers.ModelSerializer):
+
+class ImageChambreSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+
     class Meta:
-        model = HebergementImage
-        fields = ('id', 'images', 'legende_hebergement', 'created_at', 'updated_at')
+        model = ImageChambre
+        fields = ('id', 'images', 'couverture', 'legende_chambre', 'image_url')
 
+    def get_image_url(self, obj):
+        request = self.context.get('request')
+        return request.build_absolute_uri(obj.images.url)
+    
 class HebergementSerializer(serializers.ModelSerializer):
-    images = HebergementImageSerializer(many=True, read_only=True)
-
     class Meta:
-        model = Hebergement
-        fields = ('id', 'nom_hebergement', 'description_hebergement', 'adresse_hebergement',
-                  'ville_hebergement', 'nombre_etoile_hebergement', 'latitude_hebergement',
-                  'longitude_hebergement', 'responsable_hebergement',
-                  'type_hebergement', 'created_at', 'updated_at', 'images')
+        models = Hebergement
+        
+        fields = '__all__'

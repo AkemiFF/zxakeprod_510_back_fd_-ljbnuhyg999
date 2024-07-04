@@ -4,6 +4,14 @@ from django.db import models
 from Accounts.models import *
 from django.core.exceptions import ValidationError
 
+from Hebergement.models import Localisation
+
+
+class Artisanat(models.Model):
+    responsable_artisanat = models.ForeignKey(
+        ResponsableEtablissement, on_delete=models.CASCADE, related_name='Aoio')
+    localisation = models.ForeignKey(Localisation, on_delete=models.CASCADE,)
+
 
 class ProduitArtisanal(models.Model):
     description_artisanat = models.TextField()
@@ -11,8 +19,8 @@ class ProduitArtisanal(models.Model):
     disponible_artisanat = models.BooleanField(default=True)
     image_artisanat = models.ImageField(
         upload_to='artisanat_images', blank=True)
-    responsable_artisanat = models.ForeignKey(
-        ResponsableEtablissement, on_delete=models.CASCADE, related_name='produits_artisanat')
+    responsable = models.ForeignKey(
+        Artisanat, on_delete=models.CASCADE, related_name='responsable', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
