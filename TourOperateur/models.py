@@ -13,7 +13,7 @@ class TourOperateur(models.Model):
     telephone_operateur = models.CharField(max_length=10, validators=[RegexValidator(
         regex=r'^(032|033|034|038)\d{7}$', message='Le numéro doit commencer par 032, 033, 034 ou 038 et contenir 7 chiffres supplémentaires.')])
     description_operateur = models.TextField(blank=True, null=True)
-    
+    image_tour = models.ImageField(upload_to='images/Tour_operateur', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -37,7 +37,7 @@ class Voyage(models.Model):
     
 class ImageVoyage(models.Model):
     voyage = models.ForeignKey(Voyage, on_delete=models.CASCADE, related_name='images')
-    image = models.URLField(max_length=200)
+    image = models.ImageField(upload_to='images/voyage')
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):
