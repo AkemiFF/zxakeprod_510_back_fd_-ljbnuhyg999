@@ -4,7 +4,7 @@ from rest_framework import status
 from .serializers import TypeResponsableSerializer, ResponsableEtablissementSerializer, TypeCarteBancaireSerializer, ClientSerializer
 from Accounts.models import TypeResponsable, ResponsableEtablissement, TypeCarteBancaire, Client
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
-from Accounts.permissions import IsClientUser
+from .permissions import IsClientUser
 
 # Pour la partie TypeResponsable
 @api_view(['GET'])
@@ -17,7 +17,6 @@ def type_responsable_detail(request, pk):
 
     serializer = TypeResponsableSerializer(type_responsable)
     return Response(serializer.data)
-
 
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
@@ -42,7 +41,6 @@ def type_responsable_update(request, pk):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 @api_view(['DELETE'])
 @permission_classes([IsAdminUser])
