@@ -32,12 +32,12 @@ class ResponsableEtablissement(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return f"{self.nom_responsable} {self.prenom_responsable} ({self.type_responsable})"
-
     def save(self, *args, **kwargs):
         self.password_responsable = make_password(self.password_responsable)
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.nom_responsable} {self.prenom_responsable} ({self.type_responsable})"
 
 
 class TypeCarteBancaire(models.Model):
@@ -77,6 +77,10 @@ class Client(AbstractUser):
     class Meta:
         verbose_name = _('client')
         verbose_name_plural = _('clients')
+
+    # def save(self, *args, **kwargs):
+    #     self.password = make_password(self.password)
+    #     super().save(*args, **kwargs)
 
 
 Client._meta.get_field('password').validators = [

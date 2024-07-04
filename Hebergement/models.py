@@ -158,7 +158,7 @@ class Reservation(models.Model):
     date_debut_reserve = models.DateField()
     date_fin_reserve = models.DateField()
     nombre_personnes_reserve = models.IntegerField(
-        default=1)  # Nombre de personnes pour la réservation
+        default=1) 
     prix_total_reserve = models.DecimalField(max_digits=10, decimal_places=2)
     est_validee_reserve = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
