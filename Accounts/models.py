@@ -17,13 +17,7 @@ class TypeResponsable(models.Model):
         return self.type_name
 
 
-class ResponsableEtablissement(models.Model):
-    email_responsable = models.EmailField()
-    nom_responsable = models.CharField(max_length=100)
-    prenom_responsable = models.CharField(max_length=100)
-
-    password_responsable = models.CharField(max_length=100)
-
+class ResponsableEtablissement(AbstractUser):
     numero_responsable = models.CharField(max_length=10, validators=[RegexValidator(
         regex=r'^(032|033|034|038)\d{7}$', message='Le numéro doit commencer par 032, 033, 034 ou 038 et contenir 7 chiffres supplémentaires.')])
 
@@ -32,12 +26,30 @@ class ResponsableEtablissement(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def save(self, *args, **kwargs):
-        self.password_responsable = make_password(self.password_responsable)
-        super().save(*args, **kwargs)
+    groups = models.ManyToManyField(
+        'auth.Group',
+        related_name='responsableetablissement_set',
+        blank=True,
+        help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
+        verbose_name='groups',
+    )
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        related_name='responsableetablissement_set',
+        blank=True,
+        help_text='Specific permissions for this user.',
+        verbose_name='user permissions',
+    )
+
+    class Meta:
+        verbose_name = _('ResponsableEtablissement')
+        verbose_name_plural = _('ResponsableEtablissement')
 
     def __str__(self):
         return f"{self.nom_responsable} {self.prenom_responsable} ({self.type_responsable})"
+    # def save(self, *args, **kwargs):
+    #     self.password_responsable = make_password(self.password_responsable)
+    #     super().save(*args, **kwargs)
 
 
 class TypeCarteBancaire(models.Model):
@@ -92,7 +104,7 @@ Client._meta.get_field('password').validators = [
     )
 ]
 
-ResponsableEtablissement._meta.get_field('password_responsable').validators = [
+ResponsableEtablissement._meta.get_field('password').validators = [
     RegexValidator(
         regex=r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$',
         message=_(
