@@ -1,4 +1,4 @@
-# serializers.py
+# Hebergement/serializers.py
 from rest_framework import serializers
 from Hebergement.models import *
 
@@ -15,12 +15,7 @@ class ImageChambreSerializer(serializers.ModelSerializer):
         return request.build_absolute_uri(obj.images.url)
     
 class HebergementSerializer(serializers.ModelSerializer):
-    # hebergement = serializers.HebergementSerializer()
-
     class Meta:
         models = Hebergement
         
         fields = '__all__'
-    
-    
-    
