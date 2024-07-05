@@ -18,7 +18,6 @@ class TypeHebergement(models.Model):
 class HebergementImage(models.Model):
     hebergement = models.ForeignKey(
         'Hebergement', on_delete=models.CASCADE, related_name='images')
-    images = models.ImageField(upload_to='images/hebergement_images')
     couverture = models.BooleanField(default=False)
     legende_hebergement = models.CharField(max_length=200, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from Artisanal.models import Artisanat
+from Artisanal.models import *
 from Hebergement.models import *
 from polymorphic.models import PolymorphicModel
 
