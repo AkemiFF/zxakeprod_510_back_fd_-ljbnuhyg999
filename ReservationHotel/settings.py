@@ -32,9 +32,11 @@ INSTALLED_APPS = [
     'Accounts',
     'Artisanal',
     'Hebergement',
+<<<<<<< HEAD
     'TourOperateur',
+=======
     'Message',
-    'API',
+>>>>>>> origin/Mirado
 ]
 
 MIDDLEWARE = [
