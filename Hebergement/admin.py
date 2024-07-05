@@ -18,3 +18,5 @@ admin.site.register(Localisation)
 
 
 admin.site.register(TypeHebergement)
+
+admin.site.register(Reservation)
