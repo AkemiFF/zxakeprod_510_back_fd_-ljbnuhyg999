@@ -39,9 +39,23 @@ class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
         fields = (
-            'username', 'email', 'numero_client', 'numero_bancaire_client',
-            'type_carte_bancaire', 'created_at', 'updated_at', 'first_name', 'last_name', 'email', 'is_staff', 'is_active'
+            'username','first_name', 'last_name', 'email','numero_client', 'numero_bancaire_client',
+            'type_carte_bancaire', 'created_at', 'updated_at',  'is_staff', 'is_active'
         )
+        
+    extra_kwargs = {
+        'password': {'write_only': True},
+    }
+
+
+class ClientsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Client
+        fields = (
+            'username','first_name', 'last_name', 'email','numero_client', 'numero_bancaire_client',
+            'type_carte_bancaire', 'created_at', 'updated_at',  'is_staff', 'is_active'
+        )
+        
     extra_kwargs = {
         'password': {'write_only': True},
     }
