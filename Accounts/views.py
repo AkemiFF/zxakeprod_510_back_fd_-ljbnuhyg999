@@ -6,6 +6,7 @@ from Accounts.models import TypeResponsable, ResponsableEtablissement, TypeCarte
 from rest_framework.permissions import *
 from .permissions import IsClientUser
 from django.http import JsonResponse
+
 # Pour la partie TypeResponsable
 @api_view(['GET'])
 @permission_classes([IsClientUser])
@@ -155,6 +156,7 @@ def type_carte_bancaire_delete(request, pk):
 
 
 # Pour la partie Clients
+# Get fetch a list of clients
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def client_detail(request, pk):
@@ -166,8 +168,7 @@ def client_detail(request, pk):
     serializer = ClientSerializer(client)
     return Response(serializer.data)
 
-
-
+# Get all customer lists
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
 def fetch_clients_detail(request):
