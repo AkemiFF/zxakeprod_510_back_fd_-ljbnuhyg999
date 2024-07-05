@@ -36,24 +36,10 @@ class AccessoireHebergement(models.Model):
     def __str__(self):
         return self.nom_accessoire
 
-
-class Localisation(models.Model):
-    adresse = models.CharField(max_length=200, null=True, blank=True)
-    ville = models.CharField(max_length=100, null=True, blank=True)
-    latitude = models.FloatField(null=True, blank=True)
-    longitude = models.FloatField(null=True, blank=True)
-
-    def __str__(self):
-        return self.adresse
-
-
 class Hebergement(models.Model):
     nom_hebergement = models.CharField(max_length=100)
     description_hebergement = models.TextField()
     nombre_etoile_hebergement = models.IntegerField()
-    localisation = models.OneToOneField(
-        Localisation, on_delete=models.CASCADE, related_name='hebergement', null=True, blank=True)
-
     responsable_hebergement = models.ForeignKey(
         ResponsableEtablissement, on_delete=models.CASCADE, related_name='hebergements')
     type_hebergement = models.ForeignKey(
@@ -64,6 +50,17 @@ class Hebergement(models.Model):
 
     def __str__(self):
         return self.nom_hebergement
+    
+class Localisation(models.Model):
+    adresse = models.CharField(max_length=200, null=True, blank=True)
+    ville = models.CharField(max_length=100, null=True, blank=True)
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
+    hebergement_id = models.OneToOneField(
+        Hebergement, on_delete=models.CASCADE, related_name='hebergement', null=True, blank=True)
+
+    def __str__(self):
+        return self.adresse
 
 
 class HebergementAccessoire(models.Model):
@@ -111,7 +108,7 @@ class HebergementChambre(models.Model):
     chambre_personaliser = models.ForeignKey(
         ChambrePersonaliser, on_delete=models.CASCADE, null=True, blank=True)
     prix_nuit_chambre = models.DecimalField(max_digits=8, decimal_places=2)
-    disponible_chambre = models.BooleanField(default=True)
+    disponible_chambre = models.IntegerField(null=True)
     accessoires = models.ManyToManyField(
         'AccessoireChambre', through='HebergementChambreAccessoire')
 
@@ -151,7 +148,7 @@ class Reservation(models.Model):
     hotel_reserve = models.ForeignKey(
         Hebergement, on_delete=models.CASCADE, related_name='reservations')
     chambre_reserve = models.ForeignKey(
-        Chambre, on_delete=models.CASCADE, related_name='reservations')
+        HebergementChambre, on_delete=models.CASCADE, related_name='reservations')
     client_reserve = models.ForeignKey(
         Client, on_delete=models.CASCADE, related_name='reservations')
     date_debut_reserve = models.DateField()
