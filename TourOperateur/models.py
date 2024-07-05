@@ -37,7 +37,7 @@ class Voyage(models.Model):
     
 class ImageVoyage(models.Model):
     voyage = models.ForeignKey(Voyage, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to='images/voyage')
+    image = models.ImageField(upload_to='images/Touroperateur_voyage')
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):
