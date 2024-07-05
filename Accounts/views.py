@@ -3,9 +3,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import TypeResponsableSerializer, ResponsableEtablissementSerializer, TypeCarteBancaireSerializer, ClientSerializer
 from Accounts.models import TypeResponsable, ResponsableEtablissement, TypeCarteBancaire, Client
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import *
 from .permissions import IsClientUser
-
+from django.http import JsonResponse
 # Pour la partie TypeResponsable
 @api_view(['GET'])
 @permission_classes([IsClientUser])
@@ -166,16 +166,18 @@ def client_detail(request, pk):
     serializer = ClientSerializer(client)
     return Response(serializer.data)
 
+
+
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def fecth_client_detail(request):
+@permission_classes([IsAdminUser])
+def fetch_clients_detail(request):
     try:
-        client = Client.objects.all()
+        clients = Client.objects.all()
     except Client.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-
-    serializer = ClientSerializer(client)
-    return Response(serializer.data)
+    
+    serializer = ClientSerializer(clients, many=True)
+    return JsonResponse(serializer.data, safe=False)
 
 
 @api_view(['POST'])
