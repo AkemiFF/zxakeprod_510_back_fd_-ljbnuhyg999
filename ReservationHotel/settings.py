@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'Artisanal',
     'Hebergement',
     'TourOperateur',
+    'Message',
 ]
 
 MIDDLEWARE = [
