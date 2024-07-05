@@ -157,18 +157,8 @@ class Reservation(models.Model):
     date_debut_reserve = models.DateField()
     date_fin_reserve = models.DateField()
     nombre_personnes_reserve = models.IntegerField(
-        default=1) 
+        default=1)
     prix_total_reserve = models.DecimalField(max_digits=10, decimal_places=2)
     est_validee_reserve = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-
-class Message(models.Model):
-    expediteur = models.ForeignKey(
-        ResponsableEtablissement, on_delete=models.CASCADE, related_name='messages_envoyes')
-    destinataire = models.ForeignKey(
-        Client, on_delete=models.CASCADE, related_name='messages_recus')
-    sujet = models.CharField(max_length=255)
-    contenu = models.TextField()
-    date_envoi = models.DateTimeField(auto_now_add=True)
